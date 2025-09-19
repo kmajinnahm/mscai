@@ -24,6 +24,7 @@ class Maze():
         for r in self.states:
             print("|"+"|".join('*' if s.blocked else "-" if s.partOfPath else " " for s in r) + "|")
             print('----------------')
+        print('\n')
 
     def getFrontiers(self, currentState):
         frontiers = []
