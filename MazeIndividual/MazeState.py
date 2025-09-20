@@ -7,6 +7,8 @@ class MazeState():
         self.actualCostFromStart = 0
         self.heuristicCostToGoal = 0
         self.partOfPath = False
+        self.isStart = False
+        self.isEnd = False
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y

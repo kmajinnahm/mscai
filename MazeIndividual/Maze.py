@@ -6,6 +6,8 @@ class Maze():
         self.cols = cols
         self.noOfBlockedCell = noOfBlockedCell
         self.states = self.generateStates()
+        self.costOfThePath = 0
+        self.cellsOfThePath = []
     
     def generateStates(self):
         states = []
@@ -19,12 +21,14 @@ class Maze():
             (states[x][y]).blocked=True
         return states
     
-    def printMaze(self):
-        print('----------------')
+    def printMaze(self, printCostAndPath):
+        print('-----------------')
         for r in self.states:
-            print("|"+"|".join('*' if s.blocked else "-" if s.partOfPath else " " for s in r) + "|")
-            print('----------------')
-        print('\n')
+            print("|"+"|".join(" S " if s.isStart else " E " if s.isEnd else ' * ' if s.blocked else " - " if s.partOfPath else "   " for s in r) + "|")
+            print('-----------------')
+        if printCostAndPath:
+            print('Cost of the Path : {0}'.format(self.costOfThePath))
+            print('Path : {0}'.format(self.cellsOfThePath[::-1]))
 
     def getFrontiers(self, currentState):
         frontiers = []
@@ -40,3 +44,15 @@ class Maze():
             if not (self.states[currentState.x][currentState.y+p]).blocked:
                 frontiers.append(self.states[currentState.x][currentState.y+p])
         return frontiers   
+    
+    def resetMaze(self):
+        for cell in [(x, y) for x in range(self.rows) for y in range(self.cols)]:
+            c = self.states[cell[0]][cell[1]]
+            c.parent = None
+            c.actualCostFromStart = 0
+            c.heuristicCostToGoal = 0
+            c.partOfPath = False
+            c.isStart = False
+            c.isEnd = False
+        self.costOfThePath = 0
+        self.cellsOfThePath = []
