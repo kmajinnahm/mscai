@@ -16,11 +16,12 @@ def main():
     print("Heuristic based search from starting point ")
     print('Start : {}, Goal : {}'.format(start, goal))
     m.printMaze(True)
-    
+ 
     m.resetMaze()
     fc = ForwardChaining(m)
     fc.findPath(start, goal)
+    print("\nForward Chaining Inference") 
     fc.printKnowledge()
-    
+
 if __name__ == "__main__":
     main()
